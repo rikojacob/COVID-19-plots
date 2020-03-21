@@ -189,6 +189,42 @@ function rescale(value, country) {
   return value;
 }
 
+function appendGraph( svg, countryData, state,i,x,y,c ) { // svg: to append to
+
+    const line = d3.line()
+          .x((d) => (x(d.date)))
+      .y((d) => y(rescale(d.value, c)));
+
+    svg.append("path")
+      .datum(countryData)
+      .style("fill", "none")
+      .style("stroke", color(i, state.countries.length))
+      .attr("stroke-width", style.plotLineStrokeWidth)
+      .attr("d", line);
+    svg.selectAll()
+      .data(countryData)
+      .enter()
+      .append("circle")
+      .style("fill", color(i, state.countries.length))
+      .attr("r", style.plotCircleRadius)
+      .attr("cx", (d) => x(d.date))
+      .attr("cy", (d) => y(rescale(d.value, c)))
+      .on("mouseover", function(d, i) {
+        d3.select(this).attr("r", 2*style.plotCircleRadius);
+        tooltip.html(d.country
+          + "<br />Value: " + d.value.toLocaleString()
+          + "<br />Date: " + formatDate(d.date));
+        return tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", () => tooltip
+        .style("top", (d3.event.pageY-10)+"px")
+        .style("left", (d3.event.pageX+10)+"px"))
+      .on("mouseout", function(d, i) {
+        d3.select(this).transition().attr("r", style.plotCircleRadius);
+        return tooltip.style("visibility", "hidden");
+      });
+}
+
 /** This function is called when the model state has changed.
   * Its purpose is to update the view state.
  */
@@ -284,39 +320,11 @@ function onStateChange() {
         });
       }
     }
-
-    const line = d3.line()
-      .x((d) => x(d.date))
-      .y((d) => y(rescale(d.value, c)));
-
-    svg.append("path")
-      .datum(countryData)
-      .style("fill", "none")
-      .style("stroke", color(i, state.countries.length))
-      .attr("stroke-width", style.plotLineStrokeWidth)
-      .attr("d", line);
-    svg.selectAll()
-      .data(countryData)
-      .enter()
-      .append("circle")
-      .style("fill", color(i, state.countries.length))
-      .attr("r", style.plotCircleRadius)
-      .attr("cx", (d) => x(d.date))
-      .attr("cy", (d) => y(rescale(d.value, c)))
-      .on("mouseover", function(d, i) {
-        d3.select(this).attr("r", 2*style.plotCircleRadius);
-        tooltip.html(d.country
-          + "<br />Value: " + d.value.toLocaleString()
-          + "<br />Date: " + formatDate(d.date));
-        return tooltip.style("visibility", "visible");
-      })
-      .on("mousemove", () => tooltip
-        .style("top", (d3.event.pageY-10)+"px")
-        .style("left", (d3.event.pageX+10)+"px"))
-      .on("mouseout", function(d, i) {
-        d3.select(this).transition().attr("r", style.plotCircleRadius);
-        return tooltip.style("visibility", "hidden");
-      });
+      function xx(dateString) {
+          return x(dateString) - 30;
+      }    
+    appendGraph(svg, countryData, state,i,x,y,c);
+    appendGraph(svg, countryData, state,i,xx,y,c);
   }
 
   const legend = d3.select("#legend");
