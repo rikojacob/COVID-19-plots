@@ -47,8 +47,8 @@ body {
   }
 
   #creator {
-    bottom: 2rem;
-    left: 5rem;
+    bottom: 1rem;
+    left: 4rem;
   }
 }
 
@@ -59,18 +59,55 @@ nav,
   background-color: #eee;
 }
 
+#legend > .curve {
+  height: 40px;
+  line-height: 40px;
+  padding: 5px;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#legend > .curve:not(.selected):hover {
+  background-color: white;
+}
+
+#legend > .curve > span.avatar {
+  background-color: white;
+  display: block;
+  float: left;
+  font-size: large;
+  border-radius: 20px;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  font-family: "Arial", sans-serif;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin-right: 15px;
+}
+
+#legend > .curve.selected:hover > span.avatar {
+  opacity: 0.5;
+}
+
+#legend > .curve:not(.selected):hover > span.avatar {
+  background-color: #eee;
+}
+
+#legend > .curve > span.label {
+  color: black;
+}
+
+
 h1 {
   font-weight: normal;
   margin: 0;
   padding: 0;
-}
-
-header {
-  grid-area: header;
-  text-align: left;
-  margin: 0;
-  padding-left: 2vw;
-  padding-top: 0;
 }
 
 @media only screen and (min-width: 700px) {
@@ -101,17 +138,14 @@ nav {
 }
 
 nav > div {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;
-  margin-bottom: auto;
+  margin: 5px;
   font-size: large;
-  border-radius: 25px;
-  width: 50px;
-  height: 50px;
+  border-radius: 20px;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
   text-align: center;
-  line-height: 45px;
+  line-height: 40px;
   font-family: "Arial", sans-serif;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -184,18 +218,27 @@ nav > div:hover > div {
   padding: 0;
 }
 
-#legend svg:hover {
-  background-color: #fff;
-}
-
 .center-screen {
   height: 99%;
   overflow: hidden;
   width: 100%;
 }
 
-#tooltip {
+.loading-animation {
+  display: none;
   position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -56px;
+  margin-left: -56px;
+}
+
+.loading .loading-animation {
+  display: block;
+}
+
+#tooltip {
+  position: fixed;
   z-index: 10;
   visibility: hidden;
   background: #dd0;

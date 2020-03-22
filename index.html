@@ -4,21 +4,17 @@
     <meta charset="utf-8"/>
     <title>COVID-19: Time series per capita</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/tobiasahlin/SpinKit/master/spinkit.min.css"/>
     <link rel="stylesheet" href="css/style.css"/>
     <script src="https://d3js.org/d3.v5.min.js"></script>
   </head>
-  <body>
-    <header>
-      <h1>
-        COVID-19 plots
-      </h1>
-    </header>
+  <body class="loading">
     <div id="creator">by <a href="https://holgerdell.com">Holger Dell</a> (2020). Source code on <a href="https://github.com/holgerdell/COVID-19-plots">github</a>.</div>
     <nav id="nav">
       <div id="help">
         ?
         <div>You can use URL parameters, for example:
-          <span class="url">index.html?normalize=true&amp;logplot=true&amp;countries=China;Italy;Korea,%20South</span>
+          <span class="url">index.html?normalize=true&amp;logplot=true&amp;countries=China;Italy;South%20Korea</span>
         </div>
       </div>
       <div id="log">
@@ -34,10 +30,23 @@
         <div>Cycle through available datasets [d]</div>
       </div>
     </nav>
-    <main id="main"><svg class="center-screen"></svg></main>
+    <main id="main">
+      <div class="loading-animation sk-fold sk-center">
+        <div class="sk-fold-cube"></div>
+        <div class="sk-fold-cube"></div>
+        <div class="sk-fold-cube"></div>
+        <div class="sk-fold-cube"></div>
+      </div>
+      <svg class="center-screen"></svg>
+    </main>
     <aside id="legend">
     </aside>
     <div id="tooltip">empty tooltip</div>
+    <script src="itertools.js"></script>
+    <script src="github.js"></script>
+    <script src="countries.js"></script>
+    <script src="csse.js"></script>
+    <script src="owid.js"></script>
     <script src="COVID-19-plots.js"></script>
   </body>
 </html>
